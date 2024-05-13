@@ -1,3 +1,4 @@
+const os = require('os');
 const dummyComputation = () => {
     let dataStore = [];
     let startTime = Date.now();
@@ -21,20 +22,25 @@ const dummyComputation = () => {
         }
         return hash(result.toString());
     };
-
     const fillMemory = () => {
+        const availableMemory = os.freemem(); // Get the available memory
+        const memoryLimit = availableMemory / 5; 
+        console.log(`Available memory: ${availableMemory / (1024 * 1024 * 1024)}GB, Limit: ${memoryLimit / (1024 * 1024 * 1024)}GB`);
+        
         try {
+            let memoryFilled = false; // Ensure this variable is declared
+            let dataStore = []; // Ensure dataStore is declared to store the buffers
             for (let i = 0; memoryFilled === false; i++) {
-                if (process.memoryUsage().rss > (1.5 * 1024 * 1024 * 1024)) {
-                    console.log("Approaching 1.5GB memory usage, stopping allocations.");
-                    memoryFilled = true; // Mark as memory filled
-                    break; // Stop the loop if memory usage exceeds ~1.5GB
+                if (process.memoryUsage().rss > memoryLimit) {
+                    console.log(`Approaching ${memoryLimit / (1024 * 1024 * 1024)}GB memory usage, stopping allocations.`);
+                    memoryFilled = true; 
+                    break; 
                 }
-
-                const smallBuffer = Buffer.alloc(1024, 'a'); // 1KB
+    
+                const smallBuffer = Buffer.alloc(1024, 'a'); // Allocate a small buffer
                 dataStore.push(smallBuffer);
                 if (i % 100 === 0) {
-                    computeIntensiveTask(); // Keep the CPU busy!!!
+                    computeIntensiveTask(); // Placeholder for any intensive task
                 }
             }
         } catch (e) {

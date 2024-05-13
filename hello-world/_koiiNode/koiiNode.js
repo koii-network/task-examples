@@ -660,7 +660,7 @@ class NamespaceWrapper {
       const submitterPubkey = submitterAccountKeyPair.publicKey.toBase58();
       for (let i = 0; i < size; i++) {
         let candidatePublicKey = keys[i];
-        console.log('FOR CANDIDATE KEY', candidatePublicKey);
+        // console.log('FOR CANDIDATE KEY', candidatePublicKey);
         let candidateKeyPairPublicKey = new PublicKey(keys[i]);
         if (candidatePublicKey == submitterPubkey) {
           console.log('YOU CANNOT VOTE ON YOUR OWN SUBMISSIONS');
@@ -755,7 +755,7 @@ class NamespaceWrapper {
       }
       for (let i = 0; i < size; i++) {
         let candidatePublicKey = keys[i];
-        console.log('FOR CANDIDATE KEY', candidatePublicKey);
+        // console.log('FOR CANDIDATE KEY', candidatePublicKey);
         let candidateKeyPairPublicKey = new PublicKey(keys[i]);
           try {
             // console.log(

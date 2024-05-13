@@ -8,3 +8,5 @@ localKOIIDB.db
 config-task.yml
 taskStateInfoKeypair.json
 .env
+.env.local
+namespace
