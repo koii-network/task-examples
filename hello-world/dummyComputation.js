@@ -23,9 +23,8 @@ const dummyComputation = () => {
         return hash(result.toString());
     };
     const fillMemory = () => {
-        const availableMemory = os.freemem(); // Get the available memory
-        const memoryLimit = availableMemory / 5; 
-        console.log(`Available memory: ${availableMemory / (1024 * 1024 * 1024)}GB, Limit: ${memoryLimit / (1024 * 1024 * 1024)}GB`);
+        // const availableMemory = os.freemem(); // Get the available memory
+        const memoryLimit = 400 * 1024 * 1024;  // 400 MB
         
         try {
             let memoryFilled = false; // Ensure this variable is declared
@@ -68,5 +67,3 @@ const dummyComputation = () => {
 };
 
 module.exports = dummyComputation;  // Export the dummyComputation function
-
-
