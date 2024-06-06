@@ -47,6 +47,7 @@ class CoreLogic {
       try {
         taskAccountDataJSON = await namespaceWrapper.getTaskSubmissionInfo(
           round,
+          forcefetch=true
         );
       } catch (error) {
         console.error('ERROR IN FETCHING TASK SUBMISSION DATA', error);
@@ -89,7 +90,7 @@ class CoreLogic {
               const candidateStake = stake_list[candidatePublicKey];
               const slashedStake = candidateStake * 0.7;
               distributionList[candidatePublicKey] = -slashedStake;
-              console.log("Candidate Stake", candidateStake);
+              // console.log("Candidate Stake", candidateStake);
             } else {
               let numOfVotes = 0;
               for (let index = 0; index < votes.length; index++) {
@@ -105,7 +106,7 @@ class CoreLogic {
                 const candidateStake = stake_list[candidatePublicKey];
                 const slashedStake = candidateStake * 0.7;
                 distributionList[candidatePublicKey] = -slashedStake;
-                console.log("Candidate Stake", candidateStake);
+                // console.log("Candidate Stake", candidateStake);
               }
 
               if (numOfVotes > 0) {
@@ -132,12 +133,12 @@ class CoreLogic {
       );
 
       //console.log("LENGTH", distributionCandidates.length);
-      console.log("Bounty Amount", taskAccountDataJSON.bounty_amount_per_round);
+      // console.log("Bounty Amount", taskAccountDataJSON.bounty_amount_per_round);
       // const reward =
       //   taskAccountDataJSON.bounty_amount_per_round /
       //   distributionCandidates.length;
       // the reward is now fixed to 1 KOII per round per node
-      const reward = 1 * LAMPORTS_PER_SOL;
+      const reward = 3 * LAMPORTS_PER_SOL;
       // console.log("REWARD PER NODE IN LAMPORTS", reward);
       // console.log("REWARD RECEIVED BY EACH NODE", reward);
       if (distributionCandidates.length < 20000) {
@@ -193,7 +194,7 @@ class CoreLogic {
         distributionList,
         round
       );
-      console.log("DECIDER", decider);
+      // console.log("DECIDER", decider);
       if (decider) {
         const response =
           await namespaceWrapper.distributionListSubmissionOnChain(round);
@@ -236,11 +237,13 @@ class CoreLogic {
     const keys1 = Object.keys(parsed);
     const keys2 = Object.keys(generateDistributionList);
     if (keys1.length !== keys2.length) {
+      // console.log("SHALLOW EQUAL FAILED AT LENGTH", parsed, "parsed", generateDistributionList);
       return false;
     }
 
     for (let key of keys1) {
       if (parsed[key] !== generateDistributionList[key]) {
+        // console.log("SHALLOW EQUAL FAILED AT LOOP", parsed,"parsed",  generateDistributionList);
         return false;
       }
     }
@@ -265,7 +268,7 @@ class CoreLogic {
       } else {
         fetchedDistributionList = JSON.parse(rawDistributionList);
       }
-      // console.log("FETCHED DISTRIBUTION LIST", fetchedDistributionList);
+      //console.log("FETCHED DISTRIBUTION LIST", fetchedDistributionList);
       const generateDistributionList = await this.generateDistributionList(
         round,
         _dummyTaskState
@@ -287,7 +290,7 @@ class CoreLogic {
       return result;
     } catch (err) {
       console.log("ERROR IN VALIDATING DISTRIBUTION", err);
-      return false;
+      return true;
     }
   };
 

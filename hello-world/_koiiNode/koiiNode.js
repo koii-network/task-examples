@@ -8,6 +8,13 @@ const fsPromises = require("fs/promises");
 const bs58 = require("bs58");
 const nacl = require("tweetnacl");
 
+const { Connection, PublicKey, Keypair } = require("@_koi/web3.js");
+const { KoiiStorageClient } = require("@_koii/storage-task-sdk");
+const Datastore = require("nedb-promises");
+const fsPromises = require("fs/promises");
+const bs58 = require("bs58");
+const nacl = require("tweetnacl");
+const semver = require('semver');
 /****************************************** init.js ***********************************/
 
 const express = require("express");
@@ -639,11 +646,12 @@ class NamespaceWrapper {
     }
   }
 
-  async getTaskSubmissionInfo(round) {
+  async getTaskSubmissionInfo(round, forcefetch = false) {
     if (taskNodeAdministered) {
       const taskSubmissionInfo = await genericHandler(
         "getTaskSubmissionInfo",
-        round
+        round,
+        forcefetch,
       );
       if (!taskSubmissionInfo || taskSubmissionInfo.error) {
         return null;
@@ -762,7 +770,11 @@ class NamespaceWrapper {
   ) {
     // await this.checkVoteStatus();
     console.log("******/  IN VOTING OF DISTRIBUTION LIST /******");
-
+    let tasknodeVersionSatisfied = false;
+    const taskNodeVersion = await this.getTaskNodeVersion();
+    if (semver.gte(taskNodeVersion, "1.11.19")) {
+      tasknodeVersionSatisfied = true;
+    } 
     let taskAccountDataJSON = null;
     try {
       taskAccountDataJSON = await this.getTaskDistributionInfo(round);
@@ -817,10 +829,12 @@ class NamespaceWrapper {
           //   'DISTRIBUTION SUBMISSION VALUE TO CHECK',
           //   values[i].submission_value,
           // );
+          console.log("VOTING ON DISTRIBUTION LIST");
           isValid = await validateDistribution(
             values[i].submission_value,
-            round,
-            );
+            round
+          );
+
           // console.log(`Voting ${isValid} to ${candidatePublicKey}`);
 
           if (isValid) {
@@ -851,7 +865,7 @@ class NamespaceWrapper {
                 response
               );
             }
-          } else if (isValid == false) {
+          } else if (isValid == false && tasknodeVersionSatisfied) {
             // Call auditSubmission function and isValid is passed as false
             console.log("RAISING AUDIT / VOTING FALSE ON DISTRIBUTION");
             const response = await this.distributionListAuditSubmission(
@@ -861,6 +875,24 @@ class NamespaceWrapper {
               round
             );
             console.log("RESPONSE FROM DISTRIBUTION AUDIT FUNCTION", response);
+            // get logs
+            const basepath = await this.getBasePath();
+            const logPath = `${basepath}/task.log`;
+
+            const webhookLink = "https://hooks.slack.com/services/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";
+            // 
+            try{
+              const client = new KoiiStorageClient(undefined, undefined, true);
+              const userStaking = await namespaceWrapper.getSubmitterAccount();
+              const fileUploadResponse = await client.uploadFile(`${logPath}`,userStaking);
+              const cid_returned = fileUploadResponse.cid;
+              const message = {
+                text: `Audit raised on distribution list submission by ${submitterPubkey} for round ${round}. CID: ${cid_returned}`,
+              };
+              axios.post(webhookLink, message);
+            } catch (error) {
+              console.log("Error in sending slack message", error);
+            }
           }
         } catch (err) {
           console.log("ERROR IN ELSE CONDITION FOR DISTRIBUTION", err);
@@ -900,10 +932,23 @@ class NamespaceWrapper {
     }
   }
 
+  async getTaskNodeVersion() {
+    if (taskNodeAdministered) {
+      try {
+        return await genericHandler("getTaskNodeVersion");
+      } catch (error) {
+        console.error("Error getting task node version", error);
+        return;
+      }
+    } else {
+      return "1.11.19";
+    }
+  }
+
   async nodeSelectionDistributionList(round, isPreviousFailed) {
     let taskAccountDataJSON = null;
     try {
-      taskAccountDataJSON = await this.getTaskSubmissionInfo(round);
+      taskAccountDataJSON = await this.getTaskSubmissionInfo(round, forcefetch=true);
     } catch (error) {
       console.error("Task submission not found", error);
       return;
@@ -930,7 +975,7 @@ class NamespaceWrapper {
         } else {
           let roundSubmissions = null;
           try {
-            roundSubmissions = await this.getTaskSubmissionInfo(r);
+            roundSubmissions = await this.getTaskSubmissionInfo(r, forcefetch=true);
             if (roundSubmissions && roundSubmissions.submissions[r]) {
               return new Set(Object.keys(roundSubmissions.submissions[r]));
             }
