@@ -3,12 +3,6 @@ const { createHash } = require("crypto");
 
 const { Connection, PublicKey, Keypair } = require("@_koi/web3.js");
 
-const Datastore = require("nedb-promises");
-const fsPromises = require("fs/promises");
-const bs58 = require("bs58");
-const nacl = require("tweetnacl");
-
-const { Connection, PublicKey, Keypair } = require("@_koi/web3.js");
 const { KoiiStorageClient } = require("@_koii/storage-task-sdk");
 const Datastore = require("nedb-promises");
 const fsPromises = require("fs/promises");
@@ -948,7 +942,7 @@ class NamespaceWrapper {
   async nodeSelectionDistributionList(round, isPreviousFailed) {
     let taskAccountDataJSON = null;
     try {
-      taskAccountDataJSON = await this.getTaskSubmissionInfo(round, forcefetch=true);
+      taskAccountDataJSON = await this.getTaskSubmissionInfo(round, true);
     } catch (error) {
       console.error("Task submission not found", error);
       return;
@@ -975,7 +969,7 @@ class NamespaceWrapper {
         } else {
           let roundSubmissions = null;
           try {
-            roundSubmissions = await this.getTaskSubmissionInfo(r, forcefetch=true);
+            roundSubmissions = await this.getTaskSubmissionInfo(r, true);
             if (roundSubmissions && roundSubmissions.submissions[r]) {
               return new Set(Object.keys(roundSubmissions.submissions[r]));
             }

@@ -46,7 +46,7 @@ requirementsTags:
 # OPTIONAL variables variables for creating task / REQUIRED variables for update task
 
 # OPTIONAL Only provide the taskId if you are updating the task otherwise leave blank
-task_id: '6WLjePiE9TuTTno3vKiN42RsmqF7xVtSzsJNwHj9Svxg'
+task_id: 'oNSEEXoq84MLeyEF5hxpxWVpj3ATuWZXACKh64VMGt1'
 
 # Provide the description for changes made in new version of task
 migrationDescription: 'Release new Free Token Task. Increase rewad to 3 KOII per round. 50 KOII per day.'
