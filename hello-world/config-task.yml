@@ -1,7 +1,7 @@
 # Name and metadata of your task
 task_name: 'Free Token Task!'
 author: 'Soma'
-description: "This task submits 'Hello World' to confirm that your node is online. You will earn up to 50 KOII in one day. This task will use around 1.5gb of your RAM."
+description: "This task submits 'Hello World' to confirm that your node is online. You will earn 3 KOII per round and up to 50 KOII in one day. This task will use around 0.5gb of your RAM."
 repositoryUrl: 'https://github.com/koii-network/task-examples'
 imageUrl: 'https://bafybeiaxjv3wnyeuakhvpeah5aiuomswegn2qfk47w6hrd475gkibflhvy.ipfs.w3s.link/image.png'
 
@@ -12,10 +12,10 @@ task_executable_network: 'IPFS'
 task_audit_program: 'dist/main.js'
 
 # Total round time of your task : it must be given in slots and each slot is roughly equal to 408ms
-round_time: 2000
+round_time: 4400
 
-audit_window: 750
-submission_window: 750
+audit_window: 1600
+submission_window: 1600
 
 # Amounts in KOII
 minimum_stake_amount: 1.5
@@ -46,7 +46,7 @@ requirementsTags:
 # OPTIONAL variables variables for creating task / REQUIRED variables for update task
 
 # OPTIONAL Only provide the taskId if you are updating the task otherwise leave blank
-task_id: 'oNSEEXoq84MLeyEF5hxpxWVpj3ATuWZXACKh64VMGt1'
+task_id: '26BosEnue43HbvL6GRHz8bDQi9ehSSA7A7Q67kPb3pg9'
 
 # Provide the description for changes made in new version of task
 migrationDescription: 'Release new Free Token Task. Increase rewad to 3 KOII per round. 50 KOII per day.'

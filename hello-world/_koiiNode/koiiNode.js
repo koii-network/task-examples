@@ -652,7 +652,7 @@ class NamespaceWrapper {
       }
       return taskSubmissionInfo;
     } else {
-      return this.#testingTaskState.submissions[round];
+      return this.#testingTaskState;
     }
   }
 
@@ -753,7 +753,7 @@ class NamespaceWrapper {
       }
       return taskDistributionInfo;
     } else {
-      return this.#testingTaskState.distribution_rewards_submission[round];
+      return this.#testingTaskState;
     }
   }
 
