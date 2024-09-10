@@ -1,9 +1,10 @@
 # Name and metadata of your task
-task_name: 'Free Token Task!'
-author: 'Soma'
-description: "This task submits 'Hello World' to confirm that your node is online. You will earn 3 KOII per round and up to 50 KOII in one day. This task will use around 0.5gb of your RAM."
+task_name: 'Free Fire Task!'
+author: 'Koii'
+description: "This task submits 'Hello World' to confirm that your node is online. You will earn 1 FIRE per round and up to 50 FIRE in one day. This task will use around 0.5gb of your RAM."
 repositoryUrl: 'https://github.com/koii-network/task-examples'
-imageUrl: 'https://bafybeiaxjv3wnyeuakhvpeah5aiuomswegn2qfk47w6hrd475gkibflhvy.ipfs.w3s.link/image.png'
+imageUrl: 'https://bafybeibsa6cejgpm5gtfzrhodvbcgxmpbdrnsvv6l62cnceldg2gzn37zm.ipfs.w3s.link/Fire.png'
+infoUrl: 'https://www.koii.network/ocean'
 
 # network value can be DEVELOPMENT , ARWEAVE or IPFS, Recommended IPFS when deploying to testnet as the cli automatically takes care of uploading the executable with the help of web3.js key
 task_executable_network: 'IPFS'
@@ -13,7 +14,11 @@ task_audit_program: 'dist/main.js'
 
 # Total round time of your task : it must be given in slots and each slot is roughly equal to 408ms
 round_time: 4400
+# Task Bounty Type: KOII, KPL
+task_type: 'KPL'
 
+# OPTIONAL (ONLY IF Task Type = KPL) : Token Mint Address, Fire Token as an example here. 
+token_type: "FJG2aEPtertCXoedgteCCMmgngSZo1Zd715oNBzR7xpR"
 audit_window: 1600
 submission_window: 1600
 
@@ -22,7 +27,7 @@ minimum_stake_amount: 1.5
 
 # total_bounty_amount cannot be grater than bounty_amount_per_round
 # total bounty is not accepted in case of update task
-total_bounty_amount: 100000
+total_bounty_amount: 300000
 
 bounty_amount_per_round: 50000
 
@@ -46,7 +51,7 @@ requirementsTags:
 # OPTIONAL variables variables for creating task / REQUIRED variables for update task
 
 # OPTIONAL Only provide the taskId if you are updating the task otherwise leave blank
-task_id: '26BosEnue43HbvL6GRHz8bDQi9ehSSA7A7Q67kPb3pg9'
+task_id: '911sdrzr5aUDBzML6LWiMMi7tcmhyTHLb1R2guy4ZZPY'
 
 # Provide the description for changes made in new version of task
-migrationDescription: 'Release new Free Token Task. Increase rewad to 3 KOII per round. 50 KOII per day.'
+migrationDescription: 'Update descrption and infoUrl'

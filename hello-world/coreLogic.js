@@ -138,7 +138,7 @@ class CoreLogic {
       //   taskAccountDataJSON.bounty_amount_per_round /
       //   distributionCandidates.length;
       // the reward is now fixed to 1 KOII per round per node
-      const reward = 3 * LAMPORTS_PER_SOL;
+      const reward = 1 * LAMPORTS_PER_SOL;
       // console.log("REWARD PER NODE IN LAMPORTS", reward);
       // console.log("REWARD RECEIVED BY EACH NODE", reward);
       if (distributionCandidates.length < 20000) {
