@@ -18,24 +18,24 @@ round_time: 4400
 task_type: 'KPL'
 
 # OPTIONAL (ONLY IF Task Type = KPL) : Token Mint Address, Fire Token as an example here. 
-token_type: "FJG2aEPtertCXoedgteCCMmgngSZo1Zd715oNBzR7xpR"
+token_type: "4qayyw53kWz6GzypcejjT1cvwMXS1qYLSMQRE8se3gTv"
 audit_window: 1600
 submission_window: 1600
 
 # Amounts in KOII
-minimum_stake_amount: 1.5
+minimum_stake_amount: 0.1
 
 # total_bounty_amount cannot be grater than bounty_amount_per_round
 # total bounty is not accepted in case of update task
-total_bounty_amount: 300000
+total_bounty_amount: 100000
 
-bounty_amount_per_round: 50000
+bounty_amount_per_round: 10000
 
 #Number of times allowed to re-submit the distribution  list in case the distribution list is audited
 allowed_failed_distributions: 3
 
 #Space in MBs for the account size, that holds the task data
-space: 2
+space: 3
 
 # Note that the value field in RequirementTag is optional, so it is up to you to include it or not based on your use case.
 # To add more global variables and task variables, please refer the type,value,description format shown below
@@ -51,7 +51,7 @@ requirementsTags:
 # OPTIONAL variables variables for creating task / REQUIRED variables for update task
 
 # OPTIONAL Only provide the taskId if you are updating the task otherwise leave blank
-task_id: '911sdrzr5aUDBzML6LWiMMi7tcmhyTHLb1R2guy4ZZPY'
+task_id: ''
 
 # Provide the description for changes made in new version of task
-migrationDescription: 'Update descrption and infoUrl'
+migrationDescription: ''
